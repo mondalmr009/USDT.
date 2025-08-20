@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>USDT Flash Simulator</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #00ff00;
+      font-family: monospace;
+      text-align: center;
+      margin-top: 100px;
+    }
+    button {
+      padding: 15px 25px;
+      font-size: 18px;
+      background: red;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: darkred;
+    }
+    #hash {
+      margin-top: 20px;
+      color: cyan;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <h1>⚡ USDT Flash Simulator (Testnet) ⚡</h1>
+  <p>This uses <span style="color:red">Sepolia Testnet</span> – Free & Safe</p>
+  <button onclick="sendTx()">🚀 Send Fake USDT</button>
+  <p id="status"></p>
+  <p id="hash"></p>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+  <script>
+    const USDT_ADDRESS = "0x6F5e6FfF64a93d6c8c7dD1B79b0F1b93Ff6a4E2a"; // Testnet USDT contract (example)
+
+    async function sendTx() {
+      if (!window.ethereum) {
+        alert(\"Install Metamask!\");
+        return;
+      }
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send(\"eth_requestAccounts\", []);
+      const signer = provider.getSigner();
+
+      document.getElementById(\"status\").innerText = \"Sending Fake USDT on Sepolia Testnet...\";
+
+      // উদাহরণ: শুধু 0 value tx পাঠানো হচ্ছে (USDT transfer এর মতো দেখানোর জন্য)
+      const tx = await signer.sendTransaction({
+        to: \"0x000000000000000000000000000000000000dEaD\", // dummy address
+        value: 0
+      });
+
+      document.getElementById(\"hash\").innerText = \"TX Hash: \" + tx.hash;
+      document.getElementById(\"status\").innerText = \"✅ Transaction broadcasted!\";
+    }
+  </script>
+</body>
+</html>
